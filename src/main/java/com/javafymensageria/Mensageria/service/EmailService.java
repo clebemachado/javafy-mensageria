@@ -32,7 +32,6 @@ public class EmailService {
     public void sendEmail(EmailDTO emailDTO) {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
-            System.out.println(emailDTO);
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setFrom(from);
             mimeMessageHelper.setTo(emailDTO.getEmail());
@@ -43,18 +42,16 @@ public class EmailService {
                 mimeMessageHelper.setSubject("Cadastro realizado");
             }else if (tipoDeMensagem.equals(TipoDeMensagem.UPDATE)){
                 mimeMessageHelper.setSubject("Cadastro atualizado");
+            }else if (tipoDeMensagem.equals(TipoDeMensagem.BIRTHDAY)){
+                mimeMessageHelper.setSubject("Feliz Aniversário!");
             }else{
-                System.out.println("AQUI DELETE");
                 mimeMessageHelper.setSubject("Cadastro restringido");
             }
             mimeMessageHelper.setText(geContentFromTemplate(emailDTO, emailDTO.getTipoDeMensagem().getTipoDeMensagem()), true);
-
             emailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException | IOException | TemplateException e) {
-            System.out.println("Error ao enviar o email");
             mensagem = "Error ao enviar o email";
         }
-
     }
 
     public String geContentFromTemplate(EmailDTO email, String tipoMensagem) throws IOException, TemplateException {
