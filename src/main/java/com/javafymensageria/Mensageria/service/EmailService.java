@@ -63,6 +63,7 @@ public class EmailService {
         switch (tipoMensagem){
             case "create"-> template = fmConfiguration.getTemplate("email_boas_vindas-template.ftl");
             case "update" -> template = fmConfiguration.getTemplate("email_atualizar_endereco-template.ftl");
+            case "birthday" -> template = fmConfiguration.getTemplate("email_aniversario-template.ftl");
             default -> template = fmConfiguration.getTemplate("email_deletar_endereco-template.ftl");}
 
         return FreeMarkerTemplateUtils.processTemplateIntoString(template, dados);
